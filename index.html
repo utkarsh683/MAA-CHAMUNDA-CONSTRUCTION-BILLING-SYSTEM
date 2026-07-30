@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -367,6 +368,301 @@ tbody tr:last-child td{border-bottom:none;}
 .bill-sig-line img { max-height:46px;max-width:140px;object-fit:contain; }
 .bill-sig-label { font-size:10px;color:#64748b;font-weight:700;letter-spacing:.5px;text-transform:uppercase; }
 
+/* ENHANCED CALCULATOR UI */
+.calc-layout { box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.calc-inputs { background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%); }
+.calc-section-label { 
+  font-size: 11px; 
+  font-weight: 700; 
+  text-transform: uppercase; 
+  letter-spacing: 0.6px; 
+  color: var(--primary-dark); 
+  margin-bottom: 12px; 
+  margin-top: 12px; 
+  padding-bottom: 8px; 
+  border-bottom: 2px solid var(--primary); 
+  display: flex; 
+  align-items: center; 
+  gap: 8px;
+}
+.calc-section-label:first-child { margin-top: 0; }
+.calc-section-label::before { 
+  content: ''; 
+  width: 6px; 
+  height: 6px; 
+  background: var(--primary); 
+  border-radius: 50%; 
+  flex-shrink: 0;
+}
+.form-group { margin-bottom: 16px; }
+.form-group:last-child { margin-bottom: 0; }
+.form-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary-dark); }
+.form-control { border: 1.5px solid var(--border); transition: all 0.2s ease; background: var(--bg2); }
+.form-control:hover { border-color: var(--primary); background: var(--bg2); }
+.form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15); }
+.form-select { border: 1.5px solid var(--border); transition: all 0.2s ease; }
+.form-select:hover { border-color: var(--primary); }
+.form-select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15); }
+.form-row { display: grid; gap: 14px; margin-bottom: 0; }
+.form-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.form-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.form-row.cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media(max-width: 768px) {
+  .form-row.cols-2, .form-row.cols-3, .form-row.cols-4 { grid-template-columns: 1fr; }
+}
+.calc-outputs { background: var(--bg3); border-left: 3px solid var(--primary); }
+.calc-output-header { border-bottom: 2px solid var(--primary); padding-bottom: 14px; margin-bottom: 16px; }
+.calc-output-header .co-icon { box-shadow: 0 2px 6px rgba(245, 158, 11, 0.25); }
+.calc-output-title { font-size: 18px; font-weight: 700; }
+.calc-output-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.calc-rt { width: 100%; border-collapse: collapse; }
+.calc-rt thead th { background: var(--accent); color: var(--primary); padding: 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; }
+.calc-rt tbody td { padding: 10px; background: var(--bg2); border-bottom: 1px solid var(--border); }
+.calc-rt tbody tr:hover td { background: var(--bg); }
+.calc-rt tbody tr.rt-total td { background: linear-gradient(135deg, var(--primary-light), #fef9e7); font-weight: 800; border-top: 2px solid var(--primary); }
+.calc-rt .td-val { font-family: 'JetBrains Mono', monospace; text-align: right; color: var(--text-2); font-weight: 600; }
+.calc-rt .td-label { color: var(--text-2); }
+.calc-rt .td-val.highlight { color: var(--primary-dark); font-weight: 800; }
+.calc-empty { text-align: center; padding: 40px 20px; }
+.calc-empty-icon { font-size: 48px; opacity: 0.3; margin-bottom: 10px; }
+.calc-empty-msg { color: var(--text-3); font-size: 14px; }
+.calc-sticky-nav { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.calc-tabs { display: flex; gap: 4px; flex-wrap: wrap; background: var(--bg2); padding: 10px 14px 0; border: 1px solid var(--border); border-bottom: none; border-radius: 10px 10px 0 0; }
+.calc-tab { padding: 10px 16px 12px; border: 1px solid transparent; border-bottom: none; background: transparent; color: var(--text-3); font-size: 13px; font-weight: 600; border-radius: 8px 8px 0 0; transition: all 0.2s ease; cursor: pointer; white-space: nowrap; }
+.calc-tab:hover { color: var(--primary-dark); background: var(--primary-light); }
+.calc-tab.active { background: var(--bg3); color: var(--primary-dark); border-color: var(--border); border-bottom-color: var(--bg3); }
+@media(max-width: 860px) {
+  .calc-layout { grid-template-columns: 1fr; min-height: auto; }
+  .calc-inputs { border-right: none; border-bottom: 1px solid var(--border); padding: 18px; }
+  .calc-outputs { padding: 18px; border-left: none; border-top: 3px solid var(--primary); }
+}
+@media(max-width: 600px) {
+  .form-row.cols-2, .form-row.cols-3, .form-row.cols-4 { grid-template-columns: 1fr; }
+  .calc-tabs { padding: 8px 10px 0; }
+  .calc-tab { padding: 8px 12px 10px; font-size: 12px; }
+  .calc-output-title { font-size: 16px; }
+  .calc-empty-icon { font-size: 40px; }
+}
+
+/* ESTIMATE GENERATOR STYLING */
+/* ESTIMATE GENERATOR (calculator tab) */
+.est-gen-selected-services {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.est-service-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg2);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+.est-service-row:hover {
+  border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.1);
+}
+.est-service-row-name {
+  flex: 1;
+  font-weight: 600;
+  color: var(--text-1);
+  font-size: 14px;
+}
+.est-service-row-amount {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.est-service-row-amount input {
+  width: 120px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.est-service-row-amount input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+.est-service-row-delete {
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.est-service-row-delete:hover {
+  background: #dc2626;
+}
+.est-gen-empty-state {
+  text-align: center;
+  padding: 30px 20px;
+  background: var(--bg);
+  border-radius: 8px;
+  border: 2px dashed var(--border);
+}
+.est-empty-icon {
+  font-size: 48px;
+  opacity: 0.3;
+  margin-bottom: 10px;
+}
+.est-empty-msg {
+  color: var(--text-3);
+  font-size: 14px;
+  font-weight: 500;
+}
+/* SERVICE MODAL */
+.est-service-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+.est-service-modal.open {
+  display: flex;
+}
+.est-service-modal-content {
+  background: var(--bg2);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: fadeUp 0.2s ease;
+}
+.est-service-modal-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px 12px 0 0;
+}
+.est-service-modal-header h5 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+.est-service-modal-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+.est-service-modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+.est-service-modal-body {
+  padding: 18px;
+}
+.est-service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.est-service-option {
+  padding: 14px;
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: var(--text-1);
+}
+.est-service-option:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+  transform: translateX(2px);
+}
+.est-service-option-icon {
+  font-size: 18px;
+  color: var(--primary);
+}
+@media(max-width: 768px) {
+  .est-service-row { flex-wrap: wrap; }
+  .est-service-row-amount input { width: 100%; }
+}
+@media(max-width: 600px) {
+  .est-service-modal-content { max-width: 95%; }
+}
+
+/* MOBILE POLISH + WHATSAPP FLOW */
+.wa-template-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.wa-placeholder-bank{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.wa-chip{border:1px solid var(--border);background:var(--bg3);color:var(--text-2);border-radius:999px;padding:4px 8px;font-size:11px;font-family:'JetBrains Mono',monospace;cursor:pointer;}
+.wa-safe-note{background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:8px;padding:9px 11px;font-size:12px;margin-top:10px;line-height:1.5;}
+.wa-option{display:flex;gap:8px;align-items:flex-start;margin-top:10px;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg2);font-size:12px;color:var(--text-2);}
+.wa-option input{margin-top:2px;accent-color:var(--success);}
+.app-toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);z-index:500;background:var(--accent);color:#fff;border:1px solid rgba(255,255,255,.16);box-shadow:0 12px 34px rgba(0,0,0,.25);border-radius:10px;padding:10px 14px;max-width:min(92vw,420px);font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;}
+.app-toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+@media(max-width:768px){
+  body{font-size:13px;overflow-x:hidden;}
+  .main{padding:14px 12px calc(92px + env(safe-area-inset-bottom,0px));}
+  .topnav{height:56px;gap:8px;}
+  .topnav-brand{min-width:0;flex:1;}
+  .topnav-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:54vw;letter-spacing:0;}
+  .page-actions,.modal-footer{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .page-actions .btn,.modal-footer .btn{width:100%;justify-content:center;min-height:38px;}
+  .card-body{padding:14px;}
+  .modal-body{padding:14px;}
+  .filter-grid{grid-template-columns:1fr;}
+  .bill-type-selector,.compare-grid{grid-template-columns:1fr;}
+  .service-item{padding:12px;}
+  .service-item-grid{grid-template-columns:1fr 1fr 42px;gap:8px;}
+  .service-item-grid>div:first-child{grid-column:1/-1;}
+  .service-item-grid>.svc-price,.service-item-grid>.svc-qty{min-width:0;}
+  .service-item-grid>input[readonly]{grid-column:1/3;}
+  .service-item-grid>button{width:42px;height:38px;padding:0;justify-content:center;}
+  #previewModal .modal-box{height:96vh;max-height:96vh;}
+  #previewModal .modal-body{display:block!important;}
+  #billToPrint{overflow-x:auto;margin-bottom:14px;}
+  #billContent{min-width:640px;}
+  .qr-panel{margin-bottom:12px;}
+  .table-wrap{overflow:visible;}
+  .table-wrap table thead{display:none;}
+  .table-wrap table,.table-wrap tbody,.table-wrap tr,.table-wrap td{display:block;width:100%;}
+  .table-wrap tbody tr{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin:0 0 10px;box-shadow:var(--shadow);overflow:hidden;}
+  .table-wrap tbody td{display:flex;justify-content:space-between;gap:12px;padding:9px 12px;border-bottom:1px solid var(--border);text-align:right;}
+  .table-wrap tbody td:last-child{border-bottom:none;justify-content:flex-end;flex-wrap:wrap;}
+  .table-wrap tbody td[data-label]::before{content:attr(data-label);font-size:10px;font-weight:800;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;text-align:left;}
+  .table-wrap tbody td:not([data-label])::before,.table-wrap tbody td:last-child::before{display:none;}
+}
+
+
 </style>
 </head>
 <body>
@@ -529,7 +825,7 @@ tbody tr:last-child td{border-bottom:none;}
       </div>
       <div id="estimateLinkRow" style="display:none;" class="form-group">
         <label class="form-label"><i class="fas fa-link"></i> Linked Estimate (Optional)</label>
-        <select class="form-select" id="linkedEstimate"><option value="">— No linked estimate —</option></select>
+        <select class="form-select" id="linkedEstimate" onchange="autoFillFromEstimate(this.value)"><option value="">— No linked estimate —</option></select>
         <div class="form-text">Link to a previous estimate for comparison.</div>
       </div>
       <div class="form-row cols-2" style="margin-bottom:12px;">
@@ -626,6 +922,7 @@ tbody tr:last-child td{border-bottom:none;}
           </div>
           <div class="qr-code-wrap"><div id="qrCodeImage"></div></div>
           <div style="font-size:11px;color:var(--text-3);text-align:center;margin-top:6px;">UPI: <strong id="displayUpiId">Not set</strong></div>
+          <label class="wa-option"><input type="checkbox" id="waIncludeQr"><span><strong>Include payment QR in WhatsApp</strong><br>QR image downloads only when this is selected.</span></label>
           <button class="btn btn-outline btn-sm w-full" style="margin-top:8px;" onclick="copyUPILink()"><i class="fas fa-copy"></i> Copy UPI Link</button>
         </div>
       </div>
@@ -704,14 +1001,23 @@ let services=JSON.parse(localStorage.getItem('elcServices'))||[
   {id:'19',name:"Material Supply",category:"Material",price:0,cost:0,unit:"lot"},
   {id:'20',name:"Other / Custom Item",category:"Other",price:0,cost:0,unit:"nos"}
 ];
-let settings=JSON.parse(localStorage.getItem('elcSettings'))||{
+let settings=Object.assign({
   businessName:"MAA CHAMUNDA CONSTRUCTION",ownerName:"Prajapati Darshan",businessPhone:"9586242636",
   businessEmail:"",businessAddress:"Sai Sumeru Bungalow, AA-115, GJ SH 160, Near Patel Wadi, Nava Bazar, Karjan, Gujarat 391240",licenseNo:"",gstNumber:"",
   taxRate:0,currency:"₹",footerNote:"Thank you for choosing MAA CHAMUNDA CONSTRUCTION! 🦁",
   terms:"1. Estimate valid for 30 days.\n2. 50% advance required to start work.\n3. Balance due on completion.\n4. Warranty on workmanship as agreed.\n5. Materials as per specification only.\n6. Any additional work will be charged separately.",
   estimateTerms:"This is an estimate only. Actual charges may vary based on final work scope and materials used. Estimate valid for 30 days.",
-  upiId:"",payeeName:"MAA CHAMUNDA CONSTRUCTION"
-};
+  upiId:"",payeeName:"MAA CHAMUNDA CONSTRUCTION",
+  waEstimateMsg:"Dear {name},\n\nPlease find attached your construction estimate *{number}* for *{total}*.\nProject: {project}\n\nKindly review and let us know if you'd like to proceed.\n\nThank you for choosing {business}! 🦁",
+  waInvoiceMsg:"Dear {name},\n\nPlease find attached your invoice *{number}*.\nTotal: *{total}*\nBalance Due: *{balance}*\nProject: {project}\n\nKindly arrange the payment at your earliest convenience.\n\nThank you for choosing {business}! 🦁",
+  waQrCaption:"Scan this QR with any UPI app (GPay, PhonePe, Paytm) to pay *{amount}* to {business}."
+},JSON.parse(localStorage.getItem('elcSettings'))||{});
+const DEFAULT_WA_ESTIMATE_MSG="Dear {name},\n\nPlease find your construction estimate *{number}*.\n\nKindly review and let us know if you would like to proceed.\n\nThank you for choosing {business}! 🦁";
+const DEFAULT_WA_INVOICE_MSG="Dear {name},\n\nPlease find your invoice *{number}*.\n\nKindly arrange the payment at your earliest convenience.\n\nThank you for choosing {business}! 🦁";
+const DEFAULT_WA_QR_CAPTION="Payment QR is included for *{amount}*. You can pay with GPay, PhonePe, Paytm or any UPI app.";
+settings.waEstimateMsg=settings.waEstimateMsg||DEFAULT_WA_ESTIMATE_MSG;
+settings.waInvoiceMsg=settings.waInvoiceMsg||DEFAULT_WA_INVOICE_MSG;
+settings.waQrCaption=settings.waQrCaption||DEFAULT_WA_QR_CAPTION;
 let isDark=localStorage.getItem('elcDark')==='true';
 let currentBill=null,currentSection='dashboard';
 
@@ -813,23 +1119,23 @@ function renderBillList(type){
 function billRowDashboard(b){
   const isPaid=b.billType==='estimate'||b.balance<=0;
   const tag=b.billType==='estimate'?'<span class="badge badge-estimate">Estimate</span>':'<span class="badge badge-final">Invoice</span>';
-  return`<tr><td class="td-invoice">${b.invoiceNumber}</td><td>${tag}</td><td>${b.date}</td><td><strong>${b.customerName}</strong></td>
-    <td class="text-sm text-muted">${b.projectDesc||'—'}</td><td class="td-mono">₹${fmt(b.total)}</td>
-    <td><span class="badge ${b.billType==='estimate'?'badge-grey':(isPaid?'badge-success':'badge-warning')}">${b.billType==='estimate'?'Estimate':(isPaid?'Paid':'Pending')}</span></td>
-    <td><button class="btn btn-info btn-xs" onclick="showPreview('${b.id}')"><i class="fas fa-print"></i></button>
+  return`<tr><td data-label="No." class="td-invoice">${b.invoiceNumber}</td><td data-label="Type">${tag}</td><td data-label="Date">${b.date}</td><td data-label="Customer"><strong>${b.customerName}</strong></td>
+    <td data-label="Project" class="text-sm text-muted">${b.projectDesc||'—'}</td><td data-label="Amount" class="td-mono">₹${fmt(b.total)}</td>
+    <td data-label="Status"><span class="badge ${b.billType==='estimate'?'badge-grey':(isPaid?'badge-success':'badge-warning')}">${b.billType==='estimate'?'Estimate':(isPaid?'Paid':'Pending')}</span></td>
+    <td data-label="Actions"><button class="btn btn-info btn-xs" onclick="showPreview('${b.id}')"><i class="fas fa-print"></i></button>
     <button class="btn btn-warning btn-xs" onclick="showEditBill('${b.id}')"><i class="fas fa-edit"></i></button></td></tr>`;
 }
 
 function billRowFull(b){
   const isPaid=b.billType==='estimate'||b.balance<=0;
   const tag=b.billType==='estimate'?'<span class="badge badge-estimate">Estimate</span>':'<span class="badge badge-final">Invoice</span>';
-  return`<tr><td class="td-invoice">${b.invoiceNumber}</td><td>${tag}</td><td>${b.date}</td>
-    <td><strong>${b.customerName}</strong></td><td>${b.customerPhone}</td>
-    <td class="text-sm text-muted">${b.projectDesc||'—'}</td>
-    <td class="td-mono">₹${fmt(b.total)}</td>
-    <td class="td-mono ${b.billType==='estimate'?'':(b.balance>0?'text-danger':'text-success')}">${b.billType==='estimate'?'—':'₹'+fmt(b.balance)}</td>
-    <td><span class="badge ${b.billType==='estimate'?'badge-grey':(isPaid?'badge-success':'badge-warning')}">${b.billType==='estimate'?'Estimate':(isPaid?'Paid':'Pending')}</span></td>
-    <td>
+  return`<tr><td data-label="No." class="td-invoice">${b.invoiceNumber}</td><td data-label="Type">${tag}</td><td data-label="Date">${b.date}</td>
+    <td data-label="Customer"><strong>${b.customerName}</strong></td><td data-label="Phone">${b.customerPhone}</td>
+    <td data-label="Project" class="text-sm text-muted">${b.projectDesc||'—'}</td>
+    <td data-label="Amount" class="td-mono">₹${fmt(b.total)}</td>
+    <td data-label="Balance" class="td-mono ${b.billType==='estimate'?'':(b.balance>0?'text-danger':'text-success')}">${b.billType==='estimate'?'—':'₹'+fmt(b.balance)}</td>
+    <td data-label="Status"><span class="badge ${b.billType==='estimate'?'badge-grey':(isPaid?'badge-success':'badge-warning')}">${b.billType==='estimate'?'Estimate':(isPaid?'Paid':'Pending')}</span></td>
+    <td data-label="Actions">
       <button class="btn btn-info btn-xs" onclick="showPreview('${b.id}')"><i class="fas fa-print"></i></button>
       <button class="btn btn-warning btn-xs" onclick="showEditBill('${b.id}')"><i class="fas fa-edit"></i></button>
       <button class="btn btn-success btn-xs" onclick="sendBillById('${b.id}')"><i class="fab fa-whatsapp"></i></button>
@@ -1019,6 +1325,18 @@ function renderSettings(){
         <div class="form-group"><label class="form-label">Invoice Terms &amp; Conditions</label><textarea class="form-control" id="stgTerms" rows="4">${esc(settings.terms||'')}</textarea></div>
         <div class="form-group"><label class="form-label">Estimate Note (printed on estimates)</label><textarea class="form-control" id="stgEstNote" rows="4">${esc(settings.estimateTerms||'')}</textarea></div>
       </div>
+      <div style="border-top:1px solid var(--border);margin:16px 0 12px;padding-top:12px;"><strong style="font-size:14px;"><i class="fab fa-whatsapp" style="color:#25d366;"></i> WhatsApp Message Templates</strong>
+        <div class="text-sm text-muted" style="margin-top:4px;">Edit only the friendly message. Bill number, total, balance and project are protected and added automatically if removed.</div>
+        <div class="wa-placeholder-bank">
+          ${['{name}','{number}','{total}','{balance}','{project}','{business}','{amount}'].map(p=>`<button type="button" class="wa-chip" onclick="insertWaPlaceholder('${p}')">${p}</button>`).join('')}
+        </div>
+        <div class="wa-safe-note"><i class="fas fa-shield-alt"></i> Safe mode is on: empty or broken templates will still send the important invoice/estimate details.</div>
+      </div>
+      <div class="form-row cols-2">
+        <div class="form-group"><label class="form-label">Estimate WhatsApp Message</label><textarea class="form-control" id="stgWaEst" rows="6" onfocus="activeWaField=this.id" placeholder="Write estimate message for customer...">${esc(settings.waEstimateMsg||'')}</textarea><div class="wa-template-actions"><button type="button" class="btn btn-outline btn-xs" onclick="resetWaTemplate('estimate')"><i class="fas fa-undo"></i> Default</button></div></div>
+        <div class="form-group"><label class="form-label">Final Invoice WhatsApp Message</label><textarea class="form-control" id="stgWaInv" rows="6" onfocus="activeWaField=this.id" placeholder="Write invoice message for customer...">${esc(settings.waInvoiceMsg||'')}</textarea><div class="wa-template-actions"><button type="button" class="btn btn-outline btn-xs" onclick="resetWaTemplate('final')"><i class="fas fa-undo"></i> Default</button></div></div>
+      </div>
+      <div class="form-group"><label class="form-label">Payment QR Caption</label><textarea class="form-control" id="stgWaQr" rows="2" onfocus="activeWaField=this.id" placeholder="Short payment line shown when QR is selected">${esc(settings.waQrCaption||'')}</textarea></div>
       <div class="page-actions" style="justify-content:flex-start;">
         <button class="btn btn-primary" onclick="saveSettings()"><i class="fas fa-save"></i> Save Settings</button>
         <button class="btn btn-outline" onclick="if(confirm('Reset defaults?')){localStorage.removeItem('elcSettings');location.reload();}">Reset</button>
@@ -1026,7 +1344,23 @@ function renderSettings(){
     </div></div>`;
 }
 
+let activeWaField='stgWaInv';
+function insertWaPlaceholder(token){
+  const el=document.getElementById(activeWaField)||document.getElementById('stgWaInv');
+  if(!el)return;
+  const start=el.selectionStart??el.value.length,end=el.selectionEnd??el.value.length;
+  el.value=el.value.slice(0,start)+token+el.value.slice(end);
+  el.focus();el.setSelectionRange(start+token.length,start+token.length);
+}
+function resetWaTemplate(type){
+  const id=type==='estimate'?'stgWaEst':'stgWaInv';
+  const el=document.getElementById(id);if(!el)return;
+  el.value=type==='estimate'?DEFAULT_WA_ESTIMATE_MSG:DEFAULT_WA_INVOICE_MSG;
+  activeWaField=id;
+}
+
 function saveSettings(){
+  const safeTpl=(value,fallback)=>value.trim()?value:fallback;
   settings={...settings,
     businessName:document.getElementById('stgBizName').value.trim()||settings.businessName,
     ownerName:document.getElementById('stgOwner').value.trim(),
@@ -1039,7 +1373,10 @@ function saveSettings(){
     upiId:document.getElementById('stgUpi').value.trim(),
     footerNote:document.getElementById('stgFooter').value.trim(),
     terms:document.getElementById('stgTerms').value,
-    estimateTerms:document.getElementById('stgEstNote').value
+    estimateTerms:document.getElementById('stgEstNote').value,
+    waEstimateMsg:safeTpl(document.getElementById('stgWaEst')?.value||'',DEFAULT_WA_ESTIMATE_MSG),
+    waInvoiceMsg:safeTpl(document.getElementById('stgWaInv')?.value||'',DEFAULT_WA_INVOICE_MSG),
+    waQrCaption:safeTpl(document.getElementById('stgWaQr')?.value||'',DEFAULT_WA_QR_CAPTION)
   };
   localStorage.setItem('elcSettings',JSON.stringify(settings));alert('Settings saved!');
 }
@@ -1079,6 +1416,31 @@ function populateEstimateDropdown(){
   const sel=document.getElementById('linkedEstimate');
   sel.innerHTML='<option value="">— No linked estimate —</option>'
     +bills.filter(b=>b.billType==='estimate').map(e=>`<option value="${e.id}">${e.invoiceNumber} — ${e.customerName} (₹${fmt(e.total)})</option>`).join('');
+}
+
+function autoFillFromEstimate(estId){
+  if(!estId) return;
+  const est=bills.find(b=>b.id===estId);
+  if(!est){alert('Estimate not found');return;}
+  const setVal=(id,v)=>{const el=document.getElementById(id);if(el && v!=null) el.value=v;};
+  // Customer & project info
+  setVal('customerName', est.customerName||'');
+  setVal('customerPhone', est.customerPhone||'');
+  setVal('siteAddress', est.siteAddress||'');
+  setVal('projectDesc', est.projectDesc||'');
+  // Money fields
+  setVal('discount', est.discount||0);
+  setVal('tax', est.tax||0);
+  // Rebuild services list from estimate
+  const container=document.getElementById('servicesContainer');
+  if(container){
+    container.innerHTML='';
+    (est.services||[]).forEach(s=>addServiceRow({
+      name:s.name, price:s.price, qty:s.qty, customName:s.customName
+    }));
+    if((est.services||[]).length===0) addServiceRow();
+  }
+  calculateTotal();
 }
 
 function genInvoiceNumber(type){
@@ -1489,17 +1851,104 @@ async function downloadBillPDF(){
   doc.addImage(imgData,'PNG',10,10,w,h);doc.save(`${currentBill?.invoiceNumber||'bill'}.pdf`);
 }
 
+let waSendBusy=false;
+function showToast(msg){
+  let t=document.getElementById('appToast');
+  if(!t){t=document.createElement('div');t.id='appToast';t.className='app-toast';document.body.appendChild(t);}
+  t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove('show'),3600);
+}
+function _waFill(tpl,v){return (tpl||'').replace(/\{(\w+)\}/g,(_,k)=>v[k]??'');}
+function _waTemplate(type){
+  if(type==='final') return settings.waInvoiceMsg||DEFAULT_WA_INVOICE_MSG;
+  return settings.waEstimateMsg||DEFAULT_WA_ESTIMATE_MSG;
+}
+function _waSafeMessage(ctx,vars,qrOk){
+  let msg=_waFill(_waTemplate(ctx.type),vars).trim();
+  if(!msg)msg=_waFill(ctx.type==='final'?DEFAULT_WA_INVOICE_MSG:DEFAULT_WA_ESTIMATE_MSG,vars).trim();
+  const must=[];
+  const docLabel=ctx.type==='final'?'Invoice':'Estimate';
+  if(ctx.number&&!msg.includes(ctx.number))must.push(`${docLabel}: *${ctx.number}*`);
+  if(!msg.includes(vars.total))must.push(`Total: *${vars.total}*`);
+  if(ctx.type==='final'&&Number(ctx.balance)>0&&!msg.includes(vars.balance))must.push(`Balance Due: *${vars.balance}*`);
+  if(vars.project&&vars.project!=='Construction Work'&&!msg.includes(vars.project))must.push(`Project: ${vars.project}`);
+  if(qrOk&&settings.waQrCaption)must.push(_waFill(settings.waQrCaption,vars));
+  if(must.length)msg+=(msg?'\n\n':'')+must.join('\n');
+  return msg;
+}
+async function _downloadCurrentBillPDF(filename){
+  try{
+    const{jsPDF}=window.jspdf;const el=document.getElementById('billContent');if(!el)return false;
+    const wrap=document.createElement('div');wrap.style.cssText='position:fixed;left:-10000px;top:0;width:760px;background:#fff;z-index:-1;';
+    const clone=el.cloneNode(true);wrap.appendChild(clone);document.body.appendChild(wrap);
+    const canvas=await html2canvas(clone,{scale:2,useCORS:true,backgroundColor:'#fff'});
+    wrap.remove();
+    const imgData=canvas.toDataURL('image/png');
+    const doc=new jsPDF('p','mm','a4');
+    const w=190,h=canvas.height*w/canvas.width;
+    doc.addImage(imgData,'PNG',10,10,w,h);doc.save((filename||'bill')+'.pdf');
+    return true;
+  }catch(e){console.error('PDF err',e);return false;}
+}
+function _downloadQRImage(amount,name,filename){
+  const link=generateUPILink(amount,name);
+  if(!link){alert('Set UPI ID in Settings first to send payment QR');return false;}
+  try{
+    const qr=qrcode(0,'M');qr.addData(link);qr.make();
+    const cell=10,margin=24,n=qr.getModuleCount(),size=n*cell+margin*2;
+    const cv=document.createElement('canvas');cv.width=size;cv.height=size;
+    const ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,size,size);ctx.fillStyle='#000';
+    for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(qr.isDark(r,c))ctx.fillRect(margin+c*cell,margin+r*cell,cell,cell);
+    const a=document.createElement('a');a.href=cv.toDataURL('image/png');a.download=(filename||'payment-qr')+'.png';
+    document.body.appendChild(a);a.click();a.remove();return true;
+  }catch(e){alert('QR Error: '+e.message);return false;}
+}
+async function sendWhatsApp(ctx){
+  if(waSendBusy)return;
+  if(!ctx.phone){showToast('No phone number available');return;}
+  waSendBusy=true;
+  const waTab=window.open('about:blank','_blank');
+  const phoneDigits=String(ctx.phone).replace(/\D/g,'');
+  const phoneClean=phoneDigits.length===10?'91'+phoneDigits:phoneDigits;
+  const vars={
+    name:ctx.name||'Customer',number:ctx.number||'',
+    total:'₹'+(Number(ctx.total)||0).toFixed(2),
+    balance:'₹'+(Number(ctx.balance)||0).toFixed(2),
+    project:ctx.projectDesc||'Construction Work',
+    business:settings.businessName,amount:'₹'+(Number(ctx.balance>0?ctx.balance:ctx.total)||0).toFixed(2)
+  };
+  const qrAmt=Number(ctx.balance)>0?Number(ctx.balance):Number(ctx.total)||0;
+  let qrOk=false;
+  if(ctx.includeQr&&qrAmt>0)qrOk=_downloadQRImage(qrAmt,ctx.name,'payment-qr-'+(ctx.number||'bill'));
+  const finalMsg=_waSafeMessage(ctx,vars,qrOk);
+  let pdfOk=false;
+  if(ctx.downloadPdf!==false&&document.getElementById('billContent')) pdfOk=await _downloadCurrentBillPDF(ctx.number||'bill');
+  const files=[];if(pdfOk)files.push('PDF');if(qrOk)files.push('QR');
+  showToast(files.length?`${files.join(' + ')} downloaded. Attach in WhatsApp after chat opens.`:'Opening WhatsApp message.');
+  const waUrl='https://wa.me/'+phoneClean+'?text='+encodeURIComponent(finalMsg);
+  setTimeout(()=>{if(waTab)waTab.location.href=waUrl;else window.open(waUrl,'_blank');waSendBusy=false;},250);
+}
+
 function sendBillToCustomer(){
-  if(!currentBill?.customerPhone){alert('No phone available');return;}
-  const type=currentBill.billType==='estimate'?'estimate':'invoice';
-  const msg=`Dear ${currentBill.customerName}, your ${type} ${currentBill.invoiceNumber} for ₹${currentBill.total.toFixed(2)} is ready. Project: ${currentBill.projectDesc||'Construction Work'}. Thank you for choosing ${settings.businessName}!`;
-  window.open(`https://wa.me/91${currentBill.customerPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+  if(!currentBill)return;
+  sendWhatsApp({
+    type:currentBill.billType==='final'?'final':'estimate',
+    phone:currentBill.customerPhone,name:currentBill.customerName,
+    number:currentBill.invoiceNumber,total:currentBill.total,
+    balance:currentBill.balance||0,projectDesc:currentBill.projectDesc,
+    includeQr:!!document.getElementById('waIncludeQr')?.checked
+  });
 }
 
 function sendBillById(billId){
-  const bill=bills.find(b=>b.id===billId);if(!bill?.customerPhone){alert('No phone available');return;}
-  const msg=`Dear ${bill.customerName}, your ${bill.billType} ${bill.invoiceNumber} for ₹${bill.total.toFixed(2)} is ready. Thank you for choosing ${settings.businessName}!`;
-  window.open(`https://wa.me/91${bill.customerPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+  const bill=bills.find(b=>b.id===billId);if(!bill){alert('Bill not found');return;}
+  currentBill=bill;renderBillHTML(bill);
+  sendWhatsApp({
+    type:bill.billType==='final'?'final':'estimate',
+    phone:bill.customerPhone,name:bill.customerName,
+    number:bill.invoiceNumber,total:bill.total,
+    balance:bill.balance||0,projectDesc:bill.projectDesc,
+    includeQr:false
+  });
 }
 
 function generateUPILink(amount,name=''){
@@ -2435,85 +2884,176 @@ function doCalcMaterial(){
 let estGenItems=[];
 
 function calcEstimateGen(){
-  return`<div class="est-gen-wrap">
-    <div class="page-title" style="font-size:20px;margin-bottom:4px;">📋 Quick Estimate Generator</div>
-    <div class="page-subtitle" style="margin-bottom:16px;">Build a project estimate from services. Print or WhatsApp directly.</div>
-    <div class="form-row cols-2" style="margin-bottom:12px;">
-      <div class="form-group"><label class="form-label">Customer Name *</label><input type="text" class="form-control" id="egName" placeholder="Customer full name"></div>
-      <div class="form-group"><label class="form-label">Mobile Number</label><input type="tel" class="form-control" id="egPhone" placeholder="10-digit mobile"></div>
+  const inputs=`
+    <div class="calc-section-label">Customer Information</div>
+    <div class="form-row cols-2">
+      <div class="form-group"><label class="form-label">Customer Name *</label><input type="text" class="form-control" id="egName" placeholder="Customer full name" oninput="updateEstGenTotal()"></div>
+      <div class="form-group"><label class="form-label">Mobile Number</label><input type="tel" class="form-control" id="egPhone" placeholder="10-digit mobile" oninput="updateEstGenTotal()"></div>
     </div>
     <div class="form-group"><label class="form-label">Site / Project Address</label><input type="text" class="form-control" id="egAddr" placeholder="Construction site address"></div>
-    <div class="form-group"><label class="form-label">Project Description</label><input type="text" class="form-control" id="egDesc" placeholder="e.g. New 2BHK Home Construction, Renovation of Shop..."></div>
-    <div class="form-group" style="margin-top:14px;"><label class="form-label">Select Services (Check &amp; Enter Amount)</label>
-      <div class="est-gen-services-list" id="egServicesList"></div>
+    <div class="form-group"><label class="form-label">Project Description</label><input type="text" class="form-control" id="egDesc" placeholder="e.g. New 2BHK Home Construction..."></div>
+
+    <div class="calc-section-label">Services</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span style="font-size:12px;color:var(--text-3);" id="egSvcCount">0 services</span>
+      <button class="btn btn-primary btn-sm" onclick="openEstGenServiceModal()"><i class="fas fa-plus"></i> Add Service</button>
     </div>
-    <div style="margin-top:16px;">
-      <div class="form-row cols-3">
-        <div class="form-group"><label class="form-label">Discount (₹)</label><input type="number" class="form-control" id="egDisc" value="0" min="0" oninput="updateEstGenTotal()"></div>
-        <div class="form-group"><label class="form-label">GST (%)</label><input type="number" class="form-control" id="egGST" value="0" min="0" max="28" oninput="updateEstGenTotal()"></div>
-        <div class="form-group"><label class="form-label">Valid Until</label><input type="date" class="form-control" id="egValid"></div>
-      </div>
+    <div id="egServicesList" class="est-gen-selected-services"></div>
+    <div id="egServicesEmpty" class="est-gen-empty-state">
+      <div class="est-empty-icon"><i class="fas fa-list"></i></div>
+      <div class="est-empty-msg">No services added yet. Click "Add Service" to begin.</div>
     </div>
-    <div class="est-total-box">
-      <div class="est-total-item"><div class="est-total-label">Subtotal</div><div class="est-total-val" id="egSubtotal">₹0</div></div>
-      <div class="est-total-item"><div class="est-total-label">GST / Tax</div><div class="est-total-val" id="egGSTAmt">₹0</div></div>
-      <div class="est-total-item"><div class="est-total-label">TOTAL</div><div class="est-total-val" id="egTotal" style="font-size:22px;">₹0</div></div>
-    </div>
-    <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
-      <button class="btn btn-primary" onclick="printEstGenerate()"><i class="fas fa-print"></i> Print Estimate</button>
-      <button class="btn btn-success" onclick="downloadEstGenPDF()"><i class="fas fa-download"></i> Download PDF</button>
-      <button class="btn btn-info" onclick="whatsappEstGen()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
-      <button class="btn btn-warning" onclick="saveEstGenAsBill()"><i class="fas fa-save"></i> Save to Bills</button>
-    </div>
-  </div>`;
+
+    <div class="calc-section-label">Estimate Details</div>
+    <div class="form-row cols-3">
+      <div class="form-group"><label class="form-label">Discount (₹)</label><input type="number" class="form-control" id="egDisc" value="0" min="0" oninput="updateEstGenTotal()"></div>
+      <div class="form-group"><label class="form-label">GST (%)</label><input type="number" class="form-control" id="egGST" value="0" min="0" max="28" oninput="updateEstGenTotal()"></div>
+      <div class="form-group"><label class="form-label">Valid Until</label><input type="date" class="form-control" id="egValid"></div>
+    </div>`;
+  return calcLayout(inputs, emptyState('No services added yet','Add services to see the estimate summary'), 'fa-calculator', '📋 Quick Estimate', 'Build & share estimates instantly');
 }
+
 
 function renderEstGenServices(){
   const list=document.getElementById('egServicesList');
-  if(!list)return;
-  const svcList=[
-    'New Home Construction','Road Construction / Road Building Machinery Work',
-    'Interior Renovation','Exterior Renovation','Electric Work',
-    'Farm House Construction','Plumbing Work','Complete Bathroom Solutions',
-    'Roof Tiling Work','Wall Tiling Work','Floor Tiling Work','Toilet Work',
-    'Colour / Painting Work','Modern Window Frame Installation','Modern Door Frame Installation',
-    'Excavation Work','RCC Slab Work','Steel / Reinforcement','Plaster Work',
-    'Material Supply','Labour Charges per day','Other / Custom Item'
-  ];
-  list.innerHTML=svcList.map((svc,i)=>`
-    <label class="est-service-check" id="egSvcLabel${i}" onclick="toggleEstSvc(${i})">
-      <input type="checkbox" id="egSvc${i}" value="${svc}">
-      <span class="svc-label">${svc}</span>
-      <input type="number" class="svc-amt" id="egAmt${i}" placeholder="₹" min="0"
-        style="width:90px;padding:3px 6px;border-radius:5px;border:1px solid var(--border);background:var(--bg2);font-size:12px;font-family:monospace;"
-        onclick="event.stopPropagation()" oninput="updateEstGenTotal()">
-    </label>`).join('');
-}
-
-function toggleEstSvc(i){
-  const cb=document.getElementById('egSvc'+i);
-  const lbl=document.getElementById('egSvcLabel'+i);
-  cb.checked=!cb.checked;
-  lbl.classList.toggle('selected',cb.checked);
+  const empty=document.getElementById('egServicesEmpty');
+  if(!list||!empty)return;
+  // Rebuild DOM from the in-memory estGenItems array (source of truth).
+  // This preserves services across tab switches & calculator re-renders.
+  list.innerHTML=estGenItems.map(it=>`
+    <div class="est-service-row" id="${it.id}">
+      <div class="est-service-row-name">${it.name}</div>
+      <div class="est-service-row-amount">
+        <span style="color:var(--text-3);">₹</span>
+        <input type="number" class="svc-amount-input" placeholder="Amount" min="0"
+               value="${it.amount||0}"
+               oninput="onEstGenAmountInput('${it.id}', this.value)">
+      </div>
+      <button class="est-service-row-delete" onclick="removeServiceFromEst('${it.id}')" type="button"><i class="fas fa-trash"></i></button>
+    </div>`).join('');
+  empty.style.display = estGenItems.length===0 ? 'flex' : 'none';
   updateEstGenTotal();
 }
 
-function updateEstGenTotal(){
-  let sub=0;
-  document.querySelectorAll('[id^=egSvc]').forEach(cb=>{
-    if(cb.type==='checkbox'&&cb.checked){
-      const idx=cb.id.replace('egSvc','');
-      const amt=parseFloat(document.getElementById('egAmt'+idx)?.value)||0;
-      sub+=amt;
-    }
-  });
-  const disc=parseFloat(document.getElementById('egDisc')?.value)||0;
-  const gst=parseFloat(document.getElementById('egGST')?.value)||0;
-  const gstAmt=(sub-disc)*(gst/100);
-  const total=sub-disc+gstAmt;
-  const s=id=>{const e=document.getElementById(id);if(e)e.textContent='₹'+fmt(Math.round(id==='egTotal'?total:id==='egGSTAmt'?gstAmt:sub));};
-  s('egSubtotal');s('egGSTAmt');s('egTotal');
+function onEstGenAmountInput(id, value){
+  const it=estGenItems.find(x=>x.id===id);
+  if(it) it.amount=parseFloat(value)||0;
+  updateEstGenTotal();
 }
+
+function openEstGenServiceModal(){
+  let modal=document.getElementById('estGenServiceModal');
+  if(!modal){
+    const modalHTML=`
+      <div id="estGenServiceModal" class="est-service-modal open">
+        <div class="est-service-modal-content">
+          <div class="est-service-modal-header">
+            <h5><i class="fas fa-plus" style="color:white;margin-right:8px;"></i> Add Service to Estimate</h5>
+            <button class="est-service-modal-close" onclick="closeEstGenServiceModal()"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="est-service-modal-body">
+            <div class="est-service-list" id="estGenServiceList"></div>
+          </div>
+        </div>
+      </div>`;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    modal=document.getElementById('estGenServiceModal');
+  }
+  renderEstGenServiceOptions();
+  modal.classList.add('open');
+}
+
+function closeEstGenServiceModal(){
+  const modal=document.getElementById('estGenServiceModal');
+  if(modal) modal.classList.remove('open');
+}
+
+function renderEstGenServiceOptions(){
+  const container=document.getElementById('estGenServiceList');
+  if(!container)return;
+  
+  const services=[
+    {name:'New Home Construction', icon:'fa-home'},
+    {name:'Road Construction / Road Building', icon:'fa-road'},
+    {name:'Interior Renovation', icon:'fa-paint-roller'},
+    {name:'Exterior Renovation', icon:'fa-house'},
+    {name:'Electric Work', icon:'fa-plug'},
+    {name:'Farm House Construction', icon:'fa-leaf'},
+    {name:'Plumbing Work', icon:'fa-water'},
+    {name:'Complete Bathroom Solutions', icon:'fa-bath'},
+    {name:'Roof Tiling Work', icon:'fa-roof'},
+    {name:'Wall Tiling Work', icon:'fa-layer-group'},
+    {name:'Floor Tiling Work', icon:'fa-th'},
+    {name:'Toilet Work', icon:'fa-restroom'},
+    {name:'Colour / Painting Work', icon:'fa-paint-roller'},
+    {name:'Modern Window Frame Installation', icon:'fa-window-maximize'},
+    {name:'Modern Door Frame Installation', icon:'fa-door-open'},
+    {name:'Excavation Work', icon:'fa-digging'},
+    {name:'RCC Slab Work', icon:'fa-layer-group'},
+    {name:'Steel / Reinforcement', icon:'fa-grip-lines'},
+    {name:'Plaster Work', icon:'fa-spray-can'},
+    {name:'Material Supply', icon:'fa-cubes'},
+    {name:'Labour Charges per day', icon:'fa-users'},
+    {name:'Other / Custom Item', icon:'fa-plus-circle'}
+  ];
+  
+  container.innerHTML=services.map(svc=>`
+    <div class="est-service-option" onclick="addServiceToEst('${svc.name.replace(/'/g,"\\'")}')">
+      <span class="est-service-option-icon"><i class="fas ${svc.icon}"></i></span>
+      <span>${svc.name}</span>
+    </div>`).join('');
+}
+
+function addServiceToEst(serviceName, prefillAmount){
+  closeEstGenServiceModal();
+  const svcId='svc_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);
+  const amount = (prefillAmount && prefillAmount > 0) ? parseFloat(prefillAmount) : 0;
+  estGenItems.push({id:svcId, name:serviceName, amount});
+  renderEstGenServices();
+}
+
+function removeServiceFromEst(svcId){
+  estGenItems = estGenItems.filter(it=>it.id!==svcId);
+  renderEstGenServices();
+}
+
+function updateEstGenTotal(){
+  let subtotal=0;
+  document.querySelectorAll('.svc-amount-input').forEach(input=>{
+    subtotal += parseFloat(input.value) || 0;
+  });
+  const discount=parseFloat(document.getElementById('egDisc')?.value) || 0;
+  const taxable=subtotal-discount;
+  const gst=parseFloat(document.getElementById('egGST')?.value) || 0;
+  const gstAmt=(taxable*gst)/100;
+  const total=taxable+gstAmt;
+  const svcCount=document.getElementById('egSvcCount');
+  const svcLen=document.querySelectorAll('.svc-amount-input').length;
+  if(svcCount) svcCount.textContent=svcLen+' service'+(svcLen!==1?'s':'');
+  const el=document.getElementById('calcResultArea');
+  if(!el) return;
+  if(svcLen===0){
+    el.innerHTML=emptyState('No services added yet','Add services to see the estimate summary');
+    return;
+  }
+  el.innerHTML=`<table class="calc-rt">
+    <thead><tr><th>Parameter</th><th style="text-align:right">Value</th></tr></thead>
+    <tbody>
+      ${rtRow('Subtotal','₹'+fmt(Math.round(subtotal)))}
+      ${discount>0?rtRow('Discount','- ₹'+fmt(Math.round(discount))):''}
+      ${gst>0?rtRow('GST ('+gst+'%)','+ ₹'+fmt(Math.round(gstAmt))):''}
+      ${rtRow('💰 Total Estimate','₹'+fmt(Math.round(total)),true,'highlight')}
+    </tbody>
+  </table>
+  <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+    <button class="btn btn-primary" onclick="printEstGenerate()"><i class="fas fa-print"></i> Print Estimate</button>
+    <button class="btn btn-success" onclick="downloadEstGenPDF()"><i class="fas fa-download"></i> Download PDF</button>
+    <button class="btn btn-info" onclick="whatsappEstGen()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+    <button class="btn btn-warning" onclick="saveEstGenAsBill()"><i class="fas fa-save"></i> Save to Bills</button>
+  </div>`;
+}
+
+
 
 function printEstGenerate(){
   const name=document.getElementById('egName')?.value||'—';
@@ -2524,14 +3064,12 @@ function printEstGenerate(){
   const disc=parseFloat(document.getElementById('egDisc')?.value)||0;
   const gst=parseFloat(document.getElementById('egGST')?.value)||0;
   const items=[];
-  document.querySelectorAll('[id^=egSvc]').forEach(cb=>{
-    if(cb.type==='checkbox'&&cb.checked){
-      const idx=cb.id.replace('egSvc','');
-      const amt=parseFloat(document.getElementById('egAmt'+idx)?.value)||0;
-      if(cb.value&&amt>0)items.push({name:cb.value,amount:amt});
-    }
+  document.querySelectorAll('#egServicesList .est-service-row').forEach(row=>{
+    const svcName=row.querySelector('.est-service-row-name')?.textContent?.trim()||'';
+    const amt=parseFloat(row.querySelector('.svc-amount-input')?.value)||0;
+    if(svcName&&amt>0)items.push({name:svcName,amount:amt});
   });
-  if(!items.length){alert('Select at least one service with an amount');return;}
+  if(!items.length){alert('Add at least one service with an amount');return;}
   const sub=items.reduce((s,i)=>s+i.amount,0);
   const gstAmt=(sub-disc)*(gst/100);
   const total=sub-disc+gstAmt;
@@ -2597,12 +3135,25 @@ async function downloadEstGenPDF(){
 }
 
 function whatsappEstGen(){
-  const name=document.getElementById('egName')?.value;
-  const phone=document.getElementById('egPhone')?.value;
+  const name=document.getElementById('egName')?.value?.trim();
+  const phone=document.getElementById('egPhone')?.value?.trim();
   if(!phone){alert('Enter customer phone number first');return;}
-  const total=document.getElementById('egTotal')?.textContent||'₹0';
-  const msg=`Dear ${name||'Customer'}, your construction estimate of *${total}* is ready. Project: ${document.getElementById('egDesc')?.value||'Construction Work'}. Thank you for choosing ${settings.businessName}!`;
-  window.open(`https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`,'_blank');
+  const items=estGenItems.map(it=>({name:it.name,price:Number(it.amount)||0,qty:1,amount:Number(it.amount)||0,unit:'lot'})).filter(it=>it.amount>0);
+  if(!items.length){alert('Add at least one service with an amount');return;}
+  const sub=items.reduce((s,i)=>s+i.amount,0);
+  const disc=parseFloat(document.getElementById('egDisc')?.value)||0;
+  const gst=parseFloat(document.getElementById('egGST')?.value)||0;
+  const taxAmount=(sub-disc)*(gst/100);
+  const total=sub-disc+taxAmount;
+  const number='EST-'+Date.now().toString().slice(-6);
+  currentBill={id:'quick_est_'+Date.now(),billType:'estimate',invoiceNumber:number,date:new Date().toISOString().split('T')[0],customerName:name||'Customer',customerPhone:phone,siteAddress:document.getElementById('egAddr')?.value||'',projectDesc:document.getElementById('egDesc')?.value||'Construction Work',validUntil:document.getElementById('egValid')?.value||'',services:items,subtotal:sub,discount:disc,tax:gst,taxAmount,total,advance:0,balance:0,notes:''};
+  renderBillHTML(currentBill);
+  sendWhatsApp({
+    type:'estimate',phone:phone,name:name||'Customer',
+    number:number,
+    total:total,balance:0,
+    projectDesc:document.getElementById('egDesc')?.value||'Construction Work'
+  });
 }
 
 function saveEstGenAsBill(){
@@ -2611,14 +3162,12 @@ function saveEstGenAsBill(){
   if(!name){alert('Customer name is required');return;}
   if(!phone){alert('Phone number is required');return;}
   const items=[];
-  document.querySelectorAll('[id^=egSvc]').forEach(cb=>{
-    if(cb.type==='checkbox'&&cb.checked){
-      const idx=cb.id.replace('egSvc','');
-      const amt=parseFloat(document.getElementById('egAmt'+idx)?.value)||0;
-      if(cb.value&&amt>0)items.push({name:cb.value,price:amt,qty:1,amount:amt,customName:'',unit:'lot'});
-    }
+  document.querySelectorAll('#egServicesList .est-service-row').forEach(row=>{
+    const svcName=row.querySelector('.est-service-row-name')?.textContent?.trim()||'';
+    const amt=parseFloat(row.querySelector('.svc-amount-input')?.value)||0;
+    if(svcName&&amt>0)items.push({name:svcName,price:amt,qty:1,amount:amt,customName:'',unit:'lot'});
   });
-  if(!items.length){alert('Select at least one service with an amount');return;}
+  if(!items.length){alert('Add at least one service with an amount');return;}
   const sub=items.reduce((s,i)=>s+i.amount,0);
   const disc=parseFloat(document.getElementById('egDisc')?.value)||0;
   const gst=parseFloat(document.getElementById('egGST')?.value)||0;
@@ -2650,24 +3199,24 @@ function saveEstGenAsBill(){
 // ---- UTILITY: send calc result to estimate generator ----
 function sendCalcToEstimate(serviceName, value){
   const val=parseFloat(String(value).replace(/[₹,]/g,''))||0;
+
+  // Switch to estimate gen tab
   document.querySelectorAll('.calc-tab').forEach(b=>b.classList.remove('active'));
   const tabs=document.querySelectorAll('.calc-tab');
   tabs[12]?.classList.add('active');
-  document.getElementById('calcContent').innerHTML=calcEstimateGen();
-  renderEstGenServices();
+
+  // Only render the tab if it's not already showing (preserve existing services)
+  const existingContent=document.getElementById('calcContent');
+  const alreadyOpen=existingContent&&existingContent.querySelector('#egServicesList');
+  if(!alreadyOpen){
+    existingContent.innerHTML=calcEstimateGen();
+    renderEstGenServices();
+  }
+
+  // Now add the service row (always add, don't check for duplicates)
   setTimeout(()=>{
-    const checks=document.querySelectorAll('[id^=egSvc]');
-    checks.forEach(cb=>{
-      if(cb.type==='checkbox'&&cb.value.toLowerCase().includes(serviceName.split(' ')[0].toLowerCase())){
-        const idx=cb.id.replace('egSvc','');
-        cb.checked=true;
-        document.getElementById('egSvcLabel'+idx)?.classList.add('selected');
-        const amtEl=document.getElementById('egAmt'+idx);
-        if(amtEl&&val>0)amtEl.value=val;
-      }
-    });
-    updateEstGenTotal();
-  },100);
+    addServiceToEst(serviceName, val);
+  },50);
 }
 
 
